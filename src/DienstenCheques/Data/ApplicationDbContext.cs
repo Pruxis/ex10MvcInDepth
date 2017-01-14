@@ -6,21 +6,17 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using ApplicationUser = DienstenCheques.Models.Domain.ApplicationUser;
 
-namespace DienstenCheques.Data
-{
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
-    {
+namespace DienstenCheques.Data {
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser> {
 
         public DbSet<Gebruiker> Gebruikers { get; set; }
         public DbSet<Onderneming> Ondernemingen { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
-            : base(options)
-        {
+            : base(options) {
         }
 
-        protected override void OnModelCreating(ModelBuilder builder)
-        {
+        protected override void OnModelCreating(ModelBuilder builder) {
             base.OnModelCreating(builder);
             builder.Entity<Bestelling>(MapBestelling);
             builder.Entity<DienstenCheque>(MapDienstenCheque);
@@ -28,8 +24,7 @@ namespace DienstenCheques.Data
             builder.Entity<Prestatie>(MapPrestatie);
         }
 
-        private static void MapPrestatie(EntityTypeBuilder<Prestatie> p)
-        {
+        private static void MapPrestatie(EntityTypeBuilder<Prestatie> p) {
             //Table
             p.ToTable("Prestatie");
 
@@ -38,13 +33,18 @@ namespace DienstenCheques.Data
                .WithMany().IsRequired().OnDelete(DeleteBehavior.Restrict);
         }
 
-        private static void MapGebruiker(EntityTypeBuilder<Gebruiker> g)
-        {
-           throw new NotImplementedException();
+        private static void MapGebruiker(EntityTypeBuilder<Gebruiker> g) {
+            // Table
+            g.ToTable("Gebruiker");
+
+            // Relationships
+            g.HasMany(t => t.Bestellingen)
+                .WithOne().IsRequired(false).OnDelete(DeleteBehavior.Restrict);
+            g.HasMany(t => t.Prestaties)
+                .WithOne().IsRequired(false).OnDelete(DeleteBehavior.Restrict);
         }
 
-        private static void MapDienstenCheque(EntityTypeBuilder<DienstenCheque> d)
-        {
+        private static void MapDienstenCheque(EntityTypeBuilder<DienstenCheque> d) {
             //Table
             d.ToTable("DienstenCheque");
             d.HasKey(t => t.DienstenChequeNummer);
@@ -57,8 +57,7 @@ namespace DienstenCheques.Data
         }
 
 
-        private static void MapBestelling(EntityTypeBuilder<Bestelling> b)
-        {
+        private static void MapBestelling(EntityTypeBuilder<Bestelling> b) {
             b.ToTable("Bestelling");
         }
     }
