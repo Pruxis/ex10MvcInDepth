@@ -7,7 +7,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using DienstenCheques.Data;
+using DienstenCheques.Data.Repositories;
 using DienstenCheques.Filters;
+using DienstenCheques.Models.Domain;
 using DienstenCheques.Services;
 using ApplicationUser = DienstenCheques.Models.Domain.ApplicationUser;
 
@@ -64,7 +66,7 @@ namespace DienstenCheques
             services.AddTransient<IEmailSender, AuthMessageSender>();
             services.AddTransient<ISmsSender, AuthMessageSender>();
 
- 
+            services.AddScoped<IGebruikersRepository, GebruikersRepository>();
             services.AddScoped<GebruikerFilter>();
             services.AddTransient<DienstenChequesInitializer>();
 
