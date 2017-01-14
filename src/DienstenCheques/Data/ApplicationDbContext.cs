@@ -36,11 +36,14 @@ namespace DienstenCheques.Data {
         private static void MapGebruiker(EntityTypeBuilder<Gebruiker> g) {
             // Table
             g.ToTable("Gebruiker");
+            g.HasKey(t => t.GebruikersNummer);
 
             // Relationships
             g.HasMany(t => t.Bestellingen)
                 .WithOne().IsRequired(false).OnDelete(DeleteBehavior.Restrict);
             g.HasMany(t => t.Prestaties)
+                .WithOne().IsRequired(false).OnDelete(DeleteBehavior.Restrict);
+            g.HasMany(t => t.Portefeuille)
                 .WithOne().IsRequired(false).OnDelete(DeleteBehavior.Restrict);
         }
 
