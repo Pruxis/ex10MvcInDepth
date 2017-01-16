@@ -38,6 +38,11 @@ namespace DienstenCheques.Data {
             g.ToTable("Gebruiker");
             g.HasKey(t => t.GebruikersNummer);
 
+            // Properties
+            g.Property(t => t.Email).HasMaxLength(100);
+            g.Property(t => t.Naam).HasMaxLength(100);
+            g.Property(t => t.Voornaam).HasMaxLength(100);
+
             // Relationships
             g.HasMany(t => t.Bestellingen)
                 .WithOne().IsRequired().OnDelete(DeleteBehavior.Restrict);
