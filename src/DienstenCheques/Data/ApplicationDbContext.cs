@@ -40,11 +40,11 @@ namespace DienstenCheques.Data {
 
             // Relationships
             g.HasMany(t => t.Bestellingen)
-                .WithOne().IsRequired(false).OnDelete(DeleteBehavior.Restrict);
+                .WithOne().IsRequired().OnDelete(DeleteBehavior.Restrict);
             g.HasMany(t => t.Prestaties)
-                .WithOne().IsRequired(false).OnDelete(DeleteBehavior.Restrict);
+                .WithOne().IsRequired().OnDelete(DeleteBehavior.Restrict);
             g.HasMany(t => t.Portefeuille)
-                .WithOne().IsRequired(false).OnDelete(DeleteBehavior.Restrict);
+                .WithOne().IsRequired().OnDelete(DeleteBehavior.Restrict);
         }
 
         private static void MapDienstenCheque(EntityTypeBuilder<DienstenCheque> d) {
